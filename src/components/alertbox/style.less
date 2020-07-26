@@ -1,0 +1,83 @@
+:global {
+  .alert-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  .alert-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .alert-exit {
+    opacity: 1;
+  }
+  .alert-exit-active {
+    opacity: 0;
+    transform: scale(0.1);
+    transition: opacity 300ms, transform 300ms;
+  }
+}
+
+
+.alertPos {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+}
+.alertContainer {
+  width: 100%;
+  background: rgba(193, 225, 255, 1);
+  border-radius: 30/75rem;
+  padding: 100/75rem 80/75rem;
+
+  .closeBtn {
+    width: 46/75rem;
+    height: 46/75rem;
+    display: inline-block;
+    background: #fff url('../../assets/close.png') no-repeat center center;
+    background-size: 20/75rem 20/75rem;
+    border-radius: 0 0 10/75rem 10/75rem;
+    position: absolute;
+    top: 0;
+    right: 55/75rem;
+  }
+
+  .alertTitle {
+    font-size: 36/75rem;
+    text-align: center;
+    color: #3E74CF;
+    font-weight: bold;
+    margin-bottom: 20/75rem;
+  }
+
+  .alertDesc {
+    font-size: 30/75rem;
+    text-align: center;
+    color: #3E74CF;
+    margin-bottom: 20/75rem;
+  }
+  
+  .actGroups {
+    display: flex;
+    justify-content: space-between;
+  }
+  .btn {
+    width: 206/75rem;
+    height: 52/75rem;
+    background: #fff;
+    border-radius: 26/75rem;
+    border: none;
+    outline: none;
+    color: #3E74CF;
+    font-size: 30/75rem;
+
+    &:active {
+      color: #fff;
+      background: #89C6FF;
+    }
+  }
+  
+}
