@@ -1,0 +1,5 @@
+//.babelrc
+{
+  "plugins": [["transform-react-jsx", { "pragma": "h" }]],
+  "presets": ["@babel/preset-env"]
+}
