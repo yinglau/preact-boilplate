@@ -24,13 +24,16 @@ if (typeof navigator != 'undefined') {
   isiOS = u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 }
 
-function callNative(methodName, jsonData = {}) {
+function callNative(methodName, jsonData = {}, callback = () => {}) {
   if (typeof window != 'undefined' && isiOS) {
     const iosMethodName = `TZ.${methodName}`;
     window.setupWebViewJavascriptBridge((bridge) => {
-      bridge.callHandler(iosMethodName, JSON.stringify(jsonData), () => {
-        // do nothing
-      });
+
+      bridge.registerHandler(iosMethodName, function(data, responseCallback) {
+        responseCallback(data);
+      })
+
+      bridge.callHandler(iosMethodName, JSON.stringify(jsonData), callback);
     });
   } else {
     const androidMethodName = methodName;
@@ -42,6 +45,7 @@ function callNative(methodName, jsonData = {}) {
       let result = window.TZ[androidMethodName](JSON.stringify(jsonData));
 
       if (result) {
+        callback(result);
         return result;
       }
     }
@@ -81,6 +85,13 @@ export default {
   shareFeedAndOutside(shareData) {
     callNative('shareFeedAndOutside', shareData);
   },
+
+  // 分享到facebook
+  // params: { title: string, url: string}
+  shareLinkToFacebook(params) {
+    callNative('shareLinkToFacebook', params)
+  },
+
   refreshVip() { // 刷新是不是VIP用户
     callNative('refreshVip');
   },
@@ -98,6 +109,11 @@ export default {
   // data = uid
   addFollowing(data) {
     return callNative('addFollowing', data);
+  },
+
+  // 获取请求api参数
+  getAuthParameters(data, cb) {
+    return callNative('getAuthParameters', data, cb);
   }
 };
 export const toastTips = (tips, type) => {
